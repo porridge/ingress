@@ -15,10 +15,10 @@ spec:
         name: nginx-ingress-lb
     spec:
       terminationGracePeriodSeconds: 60
+#      hostNetwork: true
       containers:
-      - image: gcr.io/google_containers/nginx-ingress-controller:0.8.3
+      - image: gcr.io/google_containers/nginx-ingress-controller:0.8.4
         name: nginx-ingress-lb
-        imagePullPolicy: Always
         readinessProbe:
           httpGet:
             path: /healthz

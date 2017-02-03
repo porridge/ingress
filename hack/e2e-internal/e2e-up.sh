@@ -38,6 +38,7 @@ docker run -d --name=kubelet \
     --privileged=true \
     gcr.io/google_containers/hyperkube:v${K8S_VERSION} \
     /hyperkube kubelet \
+    --vmodule="*secret*=3" \
     --containerized \
     --hostname-override="0.0.0.0" \
     --address="0.0.0.0" \

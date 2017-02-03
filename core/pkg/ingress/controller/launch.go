@@ -93,11 +93,25 @@ func NewIngressController(backend ingress.Controller) *GenericController {
 
 	kubeconfig, err := restclient.InClusterConfig()
 	if err != nil {
+		glog.Infof("error configuring the client: %v", err)
+		dir, err := os.Open("/var/run/secrets/kubernetes.io")//serviceaccount")
+		if err != nil {
+			glog.Fatalf("error opening dir: %v", err)
+		}
+		names, err := dir.Readdirnames(0)
+		//glog.Infof("read %d names", names.Size())
+		for _, name := range names {
+			glog.Infof(name)
+		}
+		for _, e := range os.Environ() {
+			glog.Infof(e)
+		}
 		kubeconfig, err = clientConfig.ClientConfig()
 		if err != nil {
 			glog.Fatalf("error configuring the client: %v", err)
 		}
 	}
+//	kubeconfig.Host = "10.0.0.1:8080"
 
 	kubeClient, err := clientset.NewForConfig(kubeconfig)
 	if err != nil {
